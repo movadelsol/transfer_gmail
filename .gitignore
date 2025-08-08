@@ -1,0 +1,5 @@
+my_gmail_account.py
+target.txt
+__pycache__/
+.python-version
+*.pyc
