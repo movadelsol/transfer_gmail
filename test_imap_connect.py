@@ -15,12 +15,13 @@ def check_inbox():
     r2 = imap_obj.select_folder("INBOX")
 
     today_str = datetime.today().strftime("%d-%b-%Y")
-    # last_str = "06-Aug-2025"
+    last_str = "06-Aug-2025"
     UIDs = imap_obj.search(["ON", today_str, "FROM", "info@video-research.jp"])
     # ic(UIDs)
     for uid in UIDs:
         raw_msg = imap_obj.fetch([uid], ["BODY[]"])[uid][b"BODY[]"]
         mail = mailparser.parse_from_bytes(raw_msg)
+        notify(mail.text_plain)
         # print(mail.subject)
         # print(mail.from_)
         # print(mail.to)
@@ -29,8 +30,8 @@ def check_inbox():
     # ic("IMAP connection closed.")
     # for i, _str in enumerate(mail.text_plain):
     #     ic(f"{i}:{_str}")
-    if UIDs:
-        notify(mail.text_plain)
+    # if UIDs:
+    #     notify(mail.text_plain)
     # text = "株式会社ビデオリサーチ 新聞広告調査 事務局"
     # notify(text)
 
