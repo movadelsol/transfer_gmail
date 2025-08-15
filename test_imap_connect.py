@@ -18,6 +18,7 @@ def check_inbox():
     last_str = "06-Aug-2025"
     UIDs = imap_obj.search(["ON", today_str, "FROM", "info@video-research.jp"])
     # ic(UIDs)
+    msg = ":nothing\n"
     for uid in UIDs:
         raw_msg = imap_obj.fetch([uid], ["BODY[]"])[uid][b"BODY[]"]
         mail = mailparser.parse_from_bytes(raw_msg)
@@ -26,7 +27,11 @@ def check_inbox():
         # print(mail.from_)
         # print(mail.to)
         # print(mail.text_plain)
+        msg = ":received\n"
     imap_obj.logout()
+    now = datetime.now().strftime("%Y%m%d%a%H%M")
+    with open('up.log','a') as f:
+        f.write(now+msg)
     # ic("IMAP connection closed.")
     # for i, _str in enumerate(mail.text_plain):
     #     ic(f"{i}:{_str}")
